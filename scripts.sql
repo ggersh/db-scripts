@@ -204,17 +204,58 @@ CREATE TABLE Invoice (
   Invoice_no int,
   Term varchar(255),
   Date_shipped DATE,
-  PRIMARY KEY Invoice_no
+  PRIMARY KEY (Invoice_no)
 );
 CREATE TABLE Employee (
-
+  Employee_id int,
+  Employee_type varchar(255),
+  First_Name varchar(255),
+  Middle_Name varchar(255),
+  Last_Name varchar(255),
+  Gender varchar(255),
+  Birth_date DATE,
+  SSN varchar(9),
+  Street varchar(255),
+  Apt varchar(255),
+  State varchar(255),
+  City varchar(255),
+  Zipcode int,
+  Mobile_phone_no varchar(15),
+  Home_phone_no varchar(15),
+  Work_phone_no varchar(15),
+  Marital_status varchar(255),
+  Job_title varchar(255),
+  Part_dental varchar(255),
+  Part_vision varchar(255),
+  Part_health varchar(255),
+  401k varchar(255),
+  Hours_vacation int,
+  Hours_sick int,
+  Work_email varchar(255),
+  Username varchar(255),
+  Password varchar(255),
+  PRIMARY KEY (Employee_id),
 );
 CREATE TABLE Dependent (
-
+  Employee_id int,
+  Name varchar(255),
+  Street varchar(255),
+  Apt varchar(255),
+  State varchar(255),
+  City varchar(255),
+  Zipcode int,
+  Phone_no varchar(15),
+  Email_address varchar(255),
+  PRIMARY KEY (Employee_id),
+  PRIMARY KEY (Name),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 --
 CREATE TABLE Office_worker (
-
+  Employee_id int,
+  Salary_amount DECIMAL(7,2),
+  PRIMARY KEY (Employee_id),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 CREATE TABLE Factory_worker (
 
