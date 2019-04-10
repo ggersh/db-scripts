@@ -1,93 +1,26 @@
 CREATE TABLE Branch (
   Branch_id int NOT NULL,
-  Street varchar(255),
+  Branch_name varchar(255),
+  Street varchar(255) NOT NULL,
   Apt varchar(255),
   State char(2) NOT NULL,
-  City varchar(255),
-  Zipcode char(5),
+  City varchar(255) NOT NULL,
+  Zipcode char(5) NOT NULL,
   Telephone_no char(10),
   Sales_tax DECIMAL(5,4) NOT NULL,
   PRIMARY KEY (Branch_id)
 );
-
-INSERT INTO Branch (Branch_id, Street, Apt, State, City, Zipcode, Telephone_no, Sales_tax)
-VALUES
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2)
-
-
 CREATE TABLE Department (
   Dept_id int NOT NULL,
   Dept_type char(1) NOT NULL CHECK (Dept_type='o' OR Dept_type='f' OR Dept_type='w' OR Dept_type='s'),
   Branch_id int NOT NULL,
   Mgr_employee_id int,
+  Primary_contact int,
   PRIMARY KEY (Dept_id),
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id),
-  FOREIGN KEY (Mgr_employee_id) REFERENCES Branch(Employee_id)
+  FOREIGN KEY (Mgr_employee_id) REFERENCES Employee(Employee_id)
+  FOREIGN KEY (Primary_contact) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Department (Dept_id, Dept_type, Branch_id, Mgr_employee_id)
-VALUES
-  (1, 'o', 1, 1),
-  (),
-  ()
-
-CREATE TABLE Office (
-  Dept_id int NOT NULL,
-  Manager varchar(255),
-  Primary_contact varchar(255),
-  PRIMARY KEY (Dept_id),
-  FOREIGN KEY (Dept_id) REFERENCES Branch(Branch_id),
-);
-
-INSERT INTO Office (Dept_id, Manager, Primary_contact)
-VALUES
-  (),
-  (),
-  ()
-
-CREATE TABLE Factory (
-  Dept_id int NOT NULL,
-  Manager varchar(255),
-  Primary_contact varchar(255),
-  PRIMARY KEY (Dept_id),
-  FOREIGN KEY (Dept_id) REFERENCES Branch(Branch_id),
-);
-
-INSERT INTO Factory (Dept_id, Manager, Primary_contact)
-VALUES
-  (),
-  (),
-  ()
-
-CREATE TABLE Warehouse (
-  Dept_id int NOT NULL,
-  Manager varchar(255),
-  Primary_contact varchar(255),
-  PRIMARY KEY (Dept_id),
-  FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id),
-);
-
-INSERT INTO Warehouse (Dept_id, Manager, Primary_contact)
-VALUES
-  (),
-  (),
-  ()
-
-CREATE TABLE Sales (
-  Dept_id int NOT NULL,
-  Manager varchar(255),
-  Primary_contact varchar(255),
-  PRIMARY KEY (Dept_id),
-  FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id),
-);
-
-INSERT INTO Sales (Dept_id, Manager, Primary_contact)
-VALUES
-  (),
-  (),
-  ()
 --
 CREATE TABLE Customer (
   Cust_id int NOT NULL,
@@ -100,73 +33,38 @@ CREATE TABLE Customer (
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id)
 );
-
-INSERT INTO Customer (Cust_id, First_Name, Middle_Name, Last_Name, Discount, Tax_exempt, Branch_id)
-VALUES
-  (1, "Jeff", "Bob","Smith", 0.32, true, 1),
-  (),
-  ()
-
 CREATE TABLE Customer_address (
   Cust_id int NOT NULL,
-  Street varchar(255),
+  Street varchar(255) NOT NULL,
   Apt varchar(255),
-  State varchar(255),
-  City varchar(255),
-  Zipcode int,
+  State varchar(255) NOT NULL,
+  City varchar(255) NOT NULL,
+  Zipcode char(5) NOT NULL,
   is_shipping BOOLEAN NOT NULL DEFAULT FALSE,
   is_billing BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
-
-INSERT INTO Customer_address (Cust_id, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
-VALUES
-  (1, 123, "Apple Street", "OH", "Columbus", "43210", true, true),
-  (),
-  ()
-
 CREATE TABLE Customer_fax (
   Cust_id int NOT NULL,
-  Fax_no char(10),
+  Fax_no char(10) NOT NULL,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
-
-INSERT INTO Customer_fax (Cust_id, Fax_no)
-VALUES
-  (1, 2341023),
-  (),
-  ()
-
 CREATE TABLE Customer_phone (
   Cust_id int NOT NULL,
-  Phone_no char(10),
+  Phone_no char(10) NOT NULL,
   is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
-
-INSERT INTO Customer_phone (Cust_id, Phone_no, is_primary)
-VALUES
-  (1, 123-456-7890, true),
-  (),
-  ()
-
 CREATE TABLE Customer_email (
   Cust_id int NOT NULL,
-  Email varchar(255),
+  Email varchar(255) NOT NULL,
   is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
-
-INSERT INTO Customer_email (Cust_id, Email, is_primary)
-VALUES
-  (1, jeff.smith@email.com, true),
-  (),
-  ()
-
 CREATE TABLE Customer_contact (
   Cust_id int NOT NULL,
   Name varchar(255),
@@ -175,29 +73,16 @@ CREATE TABLE Customer_contact (
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
-
-INSERT INTO Customer_contact (Cust_id, Name, Phone_number, Email_address)
-VALUES
-  (1, "Jim Smith", 123-456-7890, jeff.smith@email.com),
-  (),
-  ()
 --
 CREATE TABLE Manufacturer (
   Name varchar(255) NOT NULL,
   PRIMARY KEY (Name)
 );
-
-INSERT INTO Manufacturer (Name)
-VALUES
-  ("Manufacturer inc."),
-  (),
-  ()
-
 CREATE TABLE Manufacturer_address (
   Man_name varchar(255) NOT NULL,
   Street varchar(255) NOT NULL,
-  Apt varchar(255) NOT NULL,
-  State char(2) NOT NULL,
+  Apt varchar(255),
+  State charchar(2) NOT NULL,
   City varchar(255) NOT NULL,
   Zipcode char(5) NOT NULL,
   is_shipping BOOLEAN NOT NULL DEFAULT FALSE,
@@ -205,26 +90,12 @@ CREATE TABLE Manufacturer_address (
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO Manufacturer_address (Man_name, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
-VALUES
-  ("Manufacturer inc.", "Apple Street", "A", "Columbus", "43210", true, true),
-  (),
-  ()
-
 CREATE TABLE Manufacturer_fax (
   Man_name varchar(255) NOT NULL,
   Fax_no char(10) NOT NULL,
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO Manufacturer_fax (Man_name, Fax_no)
-VALUES
-  ("Manufacturer inc.", 2781297),
-  (),
-  ()
-
 CREATE TABLE Manufacturer_phone (
   Man_name varchar(255) NOT NULL,
   Phone_no char(10) NOT NULL,
@@ -232,13 +103,6 @@ CREATE TABLE Manufacturer_phone (
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO Manufacturer_phone (Man_name, Phone_no, is_primary)
-VALUES
-  ("Manufacturer inc.", "123-456-7890", true),
-  (),
-  ()
-
 CREATE TABLE Manufacturer_email (
   Man_name varchar(255) NOT NULL,
   Email varchar(255) NOT NULL,
@@ -246,13 +110,6 @@ CREATE TABLE Manufacturer_email (
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO Manufacturer_email (Man_name, Email, is_primary)
-VALUES
-  ("Manufacturer inc.", "jeff.smith@gmail.com", true),
-  (),
-  ()
-
 CREATE TABLE Manufacturer_contact (
   Man_name varchar(255) NOT NULL,
   Name varchar(255),
@@ -261,320 +118,170 @@ CREATE TABLE Manufacturer_contact (
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO Manufacturer_contact (Man_name, Name, Phone_number, Email_address)
-VALUES
-  ("Manufacturer inc.", "Jeff Smith", "123-456-789", "jeff.smith@email.com"),
-  (),
-  ()
 --
 CREATE TABLE Part (
   Part_no int NOT NULL,
-  Reorder_cap int,
+  Part_name varchar(255),
+  Reorder_cap int NOT NULL DEFAULT 0,
   PRIMARY KEY(Part_no)
 );
-
-INSERT INTO Part (Part_no, Reorder_cap)
-VALUES
-  (1, 1),
-  (),
-  ()
-
 CREATE TABLE Product (
   Prod_no int NOT NULL,
   Prod_name varchar(255),
-  Sale_price DECIMAL(12, 2),
-  Route_no int,
-  Bom_id int,
+  Sale_price DECIMAL(12, 2) NOT NULL,
+  Route_no int NOT NULL,
+  Bom_id int NOT NULL,
   PRIMARY KEY (Prod_no),
   FOREIGN KEY (Route_no) REFERENCES Routing_sheet(Route_no),
   FOREIGN KEY (Bom_id) REFERENCES BoM(Bom_id)
 );
-
-INSERT INTO Product (Prod_no, Prod_name, Sale_price, Route_no, Bom_id)
-VALUES
-  (1, "motorA", 54.99, 1, 1),
-  (),
-  ()
-
 CREATE TABLE BoM (
-  Bom_id int,
+  Bom_id int NOT NULL,
   PRIMARY KEY (Bom_id)
 );
-
-INSERT INTO BoM (Bom_id)
-VALUES
-  (1),
-  (),
-  ()
-
 CREATE TABLE Payment (
-  Payment_no int,
-  Payment_amount DECIMAL(100,4),
-  Payment_date DATE,
-  Invoice_no int,
+  Payment_no int NOT NULL,
+  Payment_amount DECIMAL(12,2) NOT NULL,
+  Payment_date DATE NOT NULL,
+  Invoice_no int NOT NULL,
   PRIMARY KEY (Payment_no),
   FOREIGN KEY (Invoice_no) REFERENCES Invoice(Invoice_no)
 );
-
-INSERT INTO Payment (Payment_no, Payment_amount, Payment_date, Invoice_no)
-VALUES
-  (1, 32.99, 2019-05-13, 1),
-  (),
-  ()
-
 CREATE TABLE Order (
-  Order_no int,
-  Date_ordered DATE,
+  Order_no int NOT NULL,
+  Date_ordered DATE NOT NYLL,
   Approved_denied BOOLEAN,
   Reason varchar(255),
   Cust_id int NOT NULL,
-  Invoice_no int,
-  Employee_id int,
+  Invoice_no int NOT NULL,
+  Salesperson_id int,
   PRIMARY KEY (Order_no),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id),
   FOREIGN KEY (Invoice_no) REFERENCES Invoice(Invoice_no),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Employee_id)
-VALUES
-  (1, 2019-05-13, false, "Scratches on surface", 1, 1, 1),
-  (),
-  ()
-
 CREATE TABLE Routing_sheet (
-  Route_no int,
+  Route_no int NOT NULL,
   PRIMARY KEY (Route_no),
-  FOREIGN KEY (Route_no) REFERENCES Product(Route_no)
 );
-
-INSERT INTO Routing_sheet (Route_no)
-VALUES
-  (1),
-  (),
-  ()
-
 CREATE TABLE Assembly_stage (
-  Route_no int,
-  Stage_no int,
-  Expected_duration TIME,
+  Route_no int NOT NULL,
+  Stage_no int  NOT NULL,
+  Expected_duration TIME NOT NULL,
   Start_time TIME,
   End_time TIME,
-  Route_no int,
-  PRIMARY KEY (Route_no),
-  PRIMARY KEY (Stage_no),
+  PRIMARY KEY (Route_no, Stage_no),
   FOREIGN KEY (Route_no) REFERENCES Routing_sheet(Route_no)
 );
-
-INSERT INTO Assembly_stage (Route_no, Stage_no, Expected_duration, Start_time, End_time, Route_no)
-VALUES
-  (1,1, '10:15:00','02:15:00','083000', '104500',1),
-  (),
-  ()
-
 CREATE TABLE Invoice (
-  Invoice_no int,
-  Term varchar(255),
+  Invoice_no int NOT NULL,
+  Due_date DATE NOT NULL,
   Date_shipped DATE,
   PRIMARY KEY (Invoice_no)
 );
-
-INSERT INTO Invoice (Invoice_no, Term, Date_shipped)
-VALUES
-  (1, 2019-03-13, 2019-05-13),
-  (),
-  ()
-
 CREATE TABLE Employee (
-  Employee_id int,
-  Employee_type varchar(255),
-  First_Name varchar(255),
+  Employee_id int NOT NULL,
+  Employee_type char(1) NOT NULL CHECK (Dept_type='o' OR Dept_type='f' OR Dept_type='w' OR Dept_type='s'),
+  Dept_id int NOT NULL,
+  First_Name varchar(255) NOT NULL,
   Middle_Name varchar(255),
-  Last_Name varchar(255),
-  Gender varchar(255),
-  Birth_date DATE,
-  SSN varchar(9),
-  Street varchar(255),
+  Last_Name varchar(255) NOT NULL,
+  Gender char(1) CHECK (Gender='m' OR Gender='f'),
+  Birth_date DATE NOT NULL,
+  SSN varchar(9) NOT NULL,
+  Street varchar(255) NOT NULL,
   Apt varchar(255),
-  State varchar(255),
-  City varchar(255),
-  Zipcode int,
-  Mobile_phone_no varchar(15),
-  Home_phone_no varchar(15),
-  Work_phone_no varchar(15),
-  Marital_status varchar(255),
-  Job_title varchar(255),
-  Part_dental varchar(255),
-  Part_vision varchar(255),
-  Part_health varchar(255),
-  401k varchar(255),
-  Hours_vacation int,
-  Hours_sick int,
+  State char(2) NOT NULL,
+  City varchar(255) NOT NULL,
+  Zipcode char(5) NOT NULL,
+  Mobile_phone_no varchar(10),
+  Home_phone_no varchar(10),
+  Work_phone_no varchar(10),
+  Marital_status BOOLEAN,
+  Job_title varchar(255) NOT NULL,
+  Part_dental BOOLEAN NOT NULL DEFAULT FALSE,
+  Part_vision BOOLEAN NOT NULL DEFAULT FALSE,
+  Part_health BOOLEAN NOT NULL DEFAULT FALSE,
+  401k DECIMAL(5,4) NOT NULL DEFAULT 0.0000 CHECK (401k <= 0.10000),
+  Hours_vacation DECIMAL(5,2),
+  Hours_sick DECIMAL(5,2),
   Work_email varchar(255),
   Username varchar(255),
   Password varchar(255),
   PRIMARY KEY (Employee_id),
+  FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id)
 );
-
-INSERT INTO Employee (Employee_id, Employee_type, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
-VALUES
-  (1, 'o', "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, 555-555-5555, 555-555-5555, 555-555-5555, "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
-  (),
-  ()
-
 CREATE TABLE Dependent (
-  Employee_id int,
-  Name varchar(255),
+  Employee_id int NOT NULL,
+  Name varchar(255) NOT NULL,
   Street varchar(255),
   Apt varchar(255),
   State varchar(255),
   City varchar(255),
-  Zipcode int,
-  Phone_no varchar(15),
+  Zipcode char(5),
+  Phone_no varchar(10),
   Email_address varchar(255),
-  PRIMARY KEY (Employee_id),
-  PRIMARY KEY (Name),
+  PRIMARY KEY (Employee_id, Name),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Dependent (Employee_id, Name, Street, Apt, State, City, Zipcode, Phone_no, Email_address)
-VALUES
-  (1, "Jeff", "Apple Street", "A", "OH", "Columbus", 43210, 555-555-5555, "jeff.smith@email.com"),
-  (),
-  ()
 --
 CREATE TABLE Office_worker (
-  Employee_id int,
-  Salary_amount DECIMAL(7,2),
+  Employee_id int NOT NULL,
+  Salary_amount DECIMAL(11,2) NOT NULL,
   PRIMARY KEY (Employee_id),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Office_worker (Employee_id, Salary_amount)
-VALUES
-  (1, 333333.32),
-  (),
-  ()
-
 CREATE TABLE Factory_worker (
-  Employee_id int,
-  Hours_worked int,
-  Hourly_rate DECIMAL(7,2),
+  Employee_id int NOT NULL,
+  Hours_worked DECIMAL(5,2) NOT NULL DEFAULT 000.00,
+  Hourly_rate DECIMAL(5,2)  NOT NULL,
   PRIMARY KEY (Employee_id),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Factory_worker (Employee_id, Hours_worked, Hourly_rate)
-VALUES
-  (1, 2, 32.99),
-  (),
-  ()
-
 CREATE TABLE Warehouse_worker (
-  Employee_id int,
-  Hours_worked int,
-  Hourly_rate DECIMAL(7,2),
+  Employee_id int NOT NULL,
+  Hours_worked DECIMAL(5,2) NOT NULL DEFAULT 000.00,
+  Hourly_rate DECIMAL(5,2)  NOT NULL,
   PRIMARY KEY (Employee_id),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Warehouse_worker (Employee_id, Hours_worked, Hourly_rate)
-VALUES
-  (1, 2, 32.99),
-  (),
-  ()
-
 CREATE TABLE Salesperson (
-  Employee_id int,
-  Salary_amount DECIMAL(7,2),
-  Commission_rate DECIMAL(7,2),
+  Employee_id int NOT NULL,
+  Salary_amount DECIMAL(11,2) NOT NULL,
+  Commission_rate DECIMAL(5,4) NOT NULL,
   PRIMARY KEY (Employee_id),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
-
-INSERT INTO Salesperson (Employee_id, Salary_amount, Commission_rate)
-VALUES
-  (1, 333333.23, 32.99),
-  (),
-  ()
 --
 CREATE TABLE OrderContainsProduct (
-  Order_no int,
-  Prod_no int,
-  Quantity int,
-  PRIMARY KEY (Order_no),
-  PRIMARY KEY (Prod_no),
+  Order_no int NOT NULL,
+  Prod_no int NOT NULL,
+  Quantity int NOT NULL,
+  PRIMARY KEY (Order_no, Prod_no),
   FOREIGN KEY (Order_no) REFERENCES Order(Order_no),
   FOREIGN KEY (Prod_no) REFERENCES Product(Prod_no)
 );
-
-INSERT INTO OrderContainsProduct (Order_no, Prod_no, Quantity)
-VALUES
-  (1,1,1),
-  (),
-  ()
-
 CREATE TABLE BomContainsPart (
-  Bom_id int,
-  Part_no int,
-  Quantity int,
-  PRIMARY KEY (Bom_id),
-  PRIMARY KEY (Part_no),
+  Bom_id int NOT NULL,
+  Part_no int NOT NULL,
+  Quantity int NOT NULL,
+  PRIMARY KEY (Bom_id, Part_no),
   FOREIGN KEY (Bom_id) REFERENCES BoM(Bom_id),
   FOREIGN KEY (Part_no) REFERENCES Part(Part_no)
 );
-
-INSERT INTO BomContainsPart (Bom_id, Part_no, Quantity)
-VALUES
-  (1,1,1),
-  (),
-  ()
-
 CREATE TABLE ManufacturerMakesPart (
-  Part_no int,
-  Man_name varchar(255),
-  Cost DECIMAL(10,2),
-  PRIMARY KEY (Part_no),
-  PRIMARY KEY (Man_name),
+  Part_no int NOT NULL,
+  Man_name varchar(255) NOT NULL,
+  Cost DECIMAL(11,2) NOT NULL,
+  PRIMARY KEY (Part_no, Man_name),
   FOREIGN KEY (Part_no) REFERENCES Part(Part_no),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
-
-INSERT INTO ManufacturerMakesPart (Part_no, Man_name, Cost)
-VALUES
-  (1, "Manufacturer inc.", 54.99),
-  (),
-  ()
-
-CREATE TABLE EmployeeWorksDepartment (
-  Employee_id int,
-  Dept_id int,
-  Office_no int,
-  PRIMARY KEY (Employee_id),
-  PRIMARY KEY (Dept_id),
-  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id),
-  FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id)
-);
-
-INSERT INTO EmployeeWorksDepartment (Employee_id, Dept_id, Office_no)
-VALUES
-  (1,1,1),
-  (),
-  ()
-
 CREATE TABLE BranchStocksPart (
-  Part_no int,
-  Branch_id int,
-  Quantity int,
-  PRIMARY KEY (Part_no),
-  PRIMARY KEY (Branch_id),
+  Part_no int NOT NULL,
+  Branch_id int NOT NULL,
+  Quantity int NOT NULL,
+  PRIMARY KEY (Part_no, Branch_id),
   FOREIGN KEY (Part_no) REFERENCES Part(Part_no),
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id)
 );
-
-INSERT INTO BranchStocksPart (Part_no, Branch_id, Quantity)
-VALUES
-  (1,1,1),
-  (),
-  ()
