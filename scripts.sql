@@ -1,13 +1,13 @@
 CREATE TABLE Branch (
-    Branch_id int NOT NULL,
-    Street varchar(255),
-    Apt varchar(255),
-    State varchar(255),
-    City varchar(255),
-    Zipcode int,
-    Telephone_no varchar(15),
-    Sales_tax DECIMAL(3,4),
-    PRIMARY KEY (Branch_id)
+  Branch_id int NOT NULL,
+  Street varchar(255),
+  Apt varchar(255),
+  State varchar(255),
+  City varchar(255),
+  Zipcode int,
+  Telephone_no varchar(15),
+  Sales_tax DECIMAL(3,4),
+  PRIMARY KEY (Branch_id)
 );
 CREATE TABLE Department (
   Dept_id int NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE Manufacturer (
   PRIMARY KEY (Name)
 );
 CREATE TABLE Manufacturer_address (
-  Main_name varchar(255),
+  Man_name varchar(255),
   Street varchar(255),
   Apt varchar(255),
   State varchar(255),
@@ -112,35 +112,35 @@ CREATE TABLE Manufacturer_address (
   Zipcode int,
   is_shipping BOOLEAN,
   is_billing BOOLEAN,
-  PRIMARY KEY (Main_name),
+  PRIMARY KEY (Man_name),
   FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_fax (
-  Main_name varchar(255),
+  Man_name varchar(255),
   Fax_no int,
-  PRIMARY KEY (Main_name),
+  PRIMARY KEY (Man_name),
   FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_phone (
-  Main_name varchar(255),
+  Man_name varchar(255),
   Phone_no varchar(15),
   is_primary BOOLEAN,
-  PRIMARY KEY (Main_name),
+  PRIMARY KEY (Man_name),
   FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_email (
-  Main_name varchar(255),
+  Man_name varchar(255),
   Email varchar(255),
   is_primary BOOLEAN,
-  PRIMARY KEY (Main_name),
+  PRIMARY KEY (Man_name),
   FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_contact (
-  Main_name varchar(255),
+  Man_name varchar(255),
   Name varchar(255),
   Phone_number varchar(15),
   Email_address varchar(255),
-  PRIMARY KEY (Main_name),
+  PRIMARY KEY (Man_name),
   FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
 );
 --
@@ -258,27 +258,66 @@ CREATE TABLE Office_worker (
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 CREATE TABLE Factory_worker (
-
+  Employee_id int,
+  Hours_worked int,
+  Hourly_rate DECIMAL(7,2),
+  PRIMARY KEY (Employee_id),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 CREATE TABLE Warehouse_worker (
-
+  Employee_id int,
+  Hours_worked int,
+  Hourly_rate DECIMAL(7,2),
+  PRIMARY KEY (Employee_id),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 CREATE TABLE Salesperson (
-
+  Employee_id int,
+  Salary_amount DECIMAL(7,2),
+  Commission_rate DECIMAL(7,2),
+  PRIMARY KEY (Employee_id),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 --
 CREATE TABLE OrderContainsProduct (
-
+  Order_no int,
+  Prod_no int,
+  PRIMARY KEY (Order_no),
+  PRIMARY KEY (Prod_no),
+  FOREIGN KEY (Order_no) REFERENCES Order(Order_no),
+  FOREIGN KEY (Prod_no) REFERENCES Product(Prod_no)
 );
 CREATE TABLE BomContainsPart (
-
+  Bom_id int,
+  Part_no int,
+  PRIMARY KEY (Bom_id),
+  PRIMARY KEY (Part_no),
+  FOREIGN KEY (Bom_id) REFERENCES BoM(Bom_id),
+  FOREIGN KEY (Part_no) REFERENCES Part(Part_no)
 );
 CREATE TABLE ManufacturerMakesPart (
-
+  Part_no int,
+  Man_name varchar(255),
+  Cost DECIMAL(10,2),
+  PRIMARY KEY (Part_no),
+  PRIMARY KEY (Man_name),
+  FOREIGN KEY (Part_no) REFERENCES Part(Part_no),
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE EmployeeWorksDepartment (
-
+  Employee_id int,
+  Dept_id int,
+  Office_no int,
+  PRIMARY KEY (Employee_id),
+  PRIMARY KEY (Dept_id),
+  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id),
+  FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id)
 );
 CREATE TABLE BranchStocksPart (
-
+  Part_no int,
+  Branch_id int,
+  PRIMARY KEY (Part_no),
+  PRIMARY KEY (Branch_id),
+  FOREIGN KEY (Part_no) REFERENCES Part(Part_no),
+  FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id)
 );
