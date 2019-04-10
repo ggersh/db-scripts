@@ -13,9 +13,9 @@ CREATE TABLE Branch (
 
 INSERT INTO Branch (Branch_id, Street, Apt, State, City, Zipcode, Telephone_no, Sales_tax)
 VALUES
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", "484-309-3510", 7.2)
+  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
+  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
+  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2)
 
 CREATE TABLE Department (
   Dept_id int NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE Customer_address (
 
 INSERT INTO Customer_address (Cust_id, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
 VALUES
-  (1, 123, "Apple Street", "OH", "Columbus", "43210", true, true),
+  (1, "Apple Street", "A", "OH", "Columbus", "43210", true, true),
   (),
   ()
 
@@ -81,7 +81,7 @@ CREATE TABLE Customer_fax (
 
 INSERT INTO Customer_fax (Cust_id, Fax_no)
 VALUES
-  (1, 2341023),
+  (1, '2341023'),
   (),
   ()
 
@@ -95,7 +95,7 @@ CREATE TABLE Customer_phone (
 
 INSERT INTO Customer_phone (Cust_id, Phone_no, is_primary)
 VALUES
-  (1, 123-456-7890, true),
+  (1, '1234567890', true),
   (),
   ()
 
@@ -109,7 +109,7 @@ CREATE TABLE Customer_email (
 
 INSERT INTO Customer_email (Cust_id, Email, is_primary)
 VALUES
-  (1, jeff.smith@email.com, true),
+  (1, "jeff.smith@email.com", true),
   (),
   ()
 
@@ -124,7 +124,7 @@ CREATE TABLE Customer_contact (
 
 INSERT INTO Customer_contact (Cust_id, Name, Phone_number, Email_address)
 VALUES
-  (1, "Jim Smith", 123-456-7890, jeff.smith@email.com),
+  (1, "Jim Smith", '1234567890', "jeff.smith@email.com"),
   (),
   ()
 --
@@ -143,7 +143,7 @@ CREATE TABLE Manufacturer_address (
   Man_name varchar(255) NOT NULL,
   Street varchar(255) NOT NULL,
   Apt varchar(255),
-  State charchar(2) NOT NULL,
+  State char(2) NOT NULL,
   City varchar(255) NOT NULL,
   Zipcode char(5) NOT NULL,
   is_shipping BOOLEAN NOT NULL DEFAULT FALSE,
@@ -167,7 +167,7 @@ CREATE TABLE Manufacturer_fax (
 
 INSERT INTO Manufacturer_fax (Man_name, Fax_no)
 VALUES
-  ("Manufacturer inc.", 2781297),
+  ("Manufacturer inc.", '1234567890'),
   (),
   ()
 
@@ -181,7 +181,7 @@ CREATE TABLE Manufacturer_phone (
 
 INSERT INTO Manufacturer_phone (Man_name, Phone_no, is_primary)
 VALUES
-  ("Manufacturer inc.", "123-456-7890", true),
+  ("Manufacturer inc.", '1234567890', true),
   (),
   ()
 
@@ -202,7 +202,7 @@ VALUES
 CREATE TABLE Manufacturer_contact (
   Man_name varchar(255) NOT NULL,
   Name varchar(255),
-  Phone_number varchar(15),
+  Phone_number char(10),
   Email_address varchar(255),
   PRIMARY KEY (Man_name),
   FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
@@ -345,9 +345,9 @@ CREATE TABLE Employee (
   State char(2) NOT NULL,
   City varchar(255) NOT NULL,
   Zipcode char(5) NOT NULL,
-  Mobile_phone_no varchar(10),
-  Home_phone_no varchar(10),
-  Work_phone_no varchar(10),
+  Mobile_phone_no char(10),
+  Home_phone_no char(10),
+  Work_phone_no char(10),
   Marital_status BOOLEAN,
   Job_title varchar(255) NOT NULL,
   Part_dental BOOLEAN NOT NULL DEFAULT FALSE,
@@ -365,7 +365,7 @@ CREATE TABLE Employee (
 
 INSERT INTO Employee (Employee_id, Employee_type, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
 VALUES
-  (1, 'o', "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, 555-555-5555, 555-555-5555, 555-555-5555, "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
+  (1, 'o', "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, '5555555555', '5555555555', '5555555555', "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
   (),
   ()
 
@@ -377,7 +377,7 @@ CREATE TABLE Dependent (
   State varchar(255),
   City varchar(255),
   Zipcode char(5),
-  Phone_no varchar(10),
+  Phone_no char(10),
   Email_address varchar(255),
   PRIMARY KEY (Employee_id, Name),
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
@@ -385,7 +385,7 @@ CREATE TABLE Dependent (
 
 INSERT INTO Dependent (Employee_id, Name, Street, Apt, State, City, Zipcode, Phone_no, Email_address)
 VALUES
-  (1, "Jeff", "Apple Street", "A", "OH", "Columbus", 43210, 555-555-5555, "jeff.smith@email.com"),
+  (1, "Jeff", "Apple Street", "A", "OH", "Columbus", '43210', '5555555555', "jeff.smith@email.com"),
   (),
   ()
 --
@@ -412,7 +412,7 @@ CREATE TABLE Factory_worker (
 
 INSERT INTO Factory_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (1, 2, 32.99),
+  (1, 2.02, 32.99),
   (),
   ()
 
@@ -426,7 +426,7 @@ CREATE TABLE Warehouse_worker (
 
 INSERT INTO Warehouse_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (1, 2, 32.99),
+  (1, 2.02, 32.99),
   (),
   ()
 
