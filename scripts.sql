@@ -282,6 +282,7 @@ CREATE TABLE Salesperson (
 CREATE TABLE OrderContainsProduct (
   Order_no int,
   Prod_no int,
+  Quantity int,
   PRIMARY KEY (Order_no),
   PRIMARY KEY (Prod_no),
   FOREIGN KEY (Order_no) REFERENCES Order(Order_no),
@@ -290,6 +291,7 @@ CREATE TABLE OrderContainsProduct (
 CREATE TABLE BomContainsPart (
   Bom_id int,
   Part_no int,
+  Quantity int,
   PRIMARY KEY (Bom_id),
   PRIMARY KEY (Part_no),
   FOREIGN KEY (Bom_id) REFERENCES BoM(Bom_id),
@@ -316,6 +318,7 @@ CREATE TABLE EmployeeWorksDepartment (
 CREATE TABLE BranchStocksPart (
   Part_no int,
   Branch_id int,
+  Quantity int,
   PRIMARY KEY (Part_no),
   PRIMARY KEY (Branch_id),
   FOREIGN KEY (Part_no) REFERENCES Part(Part_no),
