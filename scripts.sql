@@ -11,11 +11,11 @@ CREATE TABLE Branch (
   PRIMARY KEY (Branch_id)
 );
 
-INSERT INTO Branch (Branch_id, Street, Apt, State, City, Zipcode, Telephone_no, Sales_tax)
+INSERT INTO Branch (Branch_id, Branch_name, Street, Apt, State, City, Zipcode, Telephone_no, Sales_tax)
 VALUES
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
-  (3, "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2)
+  (3, "BranchA", "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
+  (),
+  ()
 
 CREATE TABLE Department (
   Dept_id int NOT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE Department (
   FOREIGN KEY (Primary_contact) REFERENCES Employee(Employee_id)
 );
 
-INSERT INTO Department (Dept_id, Dept_type, Branch_id, Mgr_employee_id)
+INSERT INTO Department (Dept_id, Dept_type, Branch_id, Mgr_employee_id, Primary_contact)
 VALUES
-  (1, 'o', 1, 1),
+  (1, 'o', 1, 1, 1),
   (),
   ()
 --
@@ -81,7 +81,7 @@ CREATE TABLE Customer_fax (
 
 INSERT INTO Customer_fax (Cust_id, Fax_no)
 VALUES
-  (1, '2341023'),
+  (1, '1234567890'),
   (),
   ()
 
@@ -210,7 +210,7 @@ CREATE TABLE Manufacturer_contact (
 
 INSERT INTO Manufacturer_contact (Man_name, Name, Phone_number, Email_address)
 VALUES
-  ("Manufacturer inc.", "Jeff Smith", "123-456-789", "jeff.smith@email.com"),
+  ("Manufacturer inc.", "Jeff Smith", '1234567890', "jeff.smith@email.com"),
   (),
   ()
 --
@@ -221,9 +221,9 @@ CREATE TABLE Part (
   PRIMARY KEY(Part_no)
 );
 
-INSERT INTO Part (Part_no, Reorder_cap)
+INSERT INTO Part (Part_no, Part_name, Reorder_cap)
 VALUES
-  (1, 1),
+  (1, "PartA", 1),
   (),
   ()
 
@@ -284,7 +284,7 @@ CREATE TABLE Order (
   FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
 );
 
-INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Employee_id)
+INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Salesperson_id)
 VALUES
   (1, 2019-05-13, false, "Scratches on surface", 1, 1, 1),
   (),
@@ -311,9 +311,9 @@ CREATE TABLE Assembly_stage (
   FOREIGN KEY (Route_no) REFERENCES Routing_sheet(Route_no)
 );
 
-INSERT INTO Assembly_stage (Route_no, Stage_no, Expected_duration, Start_time, End_time, Route_no)
+INSERT INTO Assembly_stage (Route_no, Stage_no, Expected_duration, Start_time, End_time)
 VALUES
-  (1,1, '10:15:00','02:15:00','083000', '104500',1),
+  (1,1, '10:15:00','02:15:00','083000', '104500'),
   (),
   ()
 
@@ -363,9 +363,9 @@ CREATE TABLE Employee (
   FOREIGN KEY (Dept_id) REFERENCES Department(Dept_id)
 );
 
-INSERT INTO Employee (Employee_id, Employee_type, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
+INSERT INTO Employee (Employee_id, Employee_type, Dept_id, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
 VALUES
-  (1, 'o', "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, '5555555555', '5555555555', '5555555555', "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
+  (1, 'o', 1, "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, '5555555555', '5555555555', '5555555555', "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
   (),
   ()
 
