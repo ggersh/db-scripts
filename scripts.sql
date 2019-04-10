@@ -2,18 +2,18 @@ CREATE TABLE Branch (
   Branch_id int NOT NULL,
   Street varchar(255),
   Apt varchar(255),
-  State varchar(255),
+  State char(2) NOT NULL,
   City varchar(255),
-  Zipcode int,
-  Telephone_no varchar(15),
-  Sales_tax DECIMAL(3,4),
+  Zipcode char(5),
+  Telephone_no char(10),
+  Sales_tax DECIMAL(5,4) NOT NULL,
   PRIMARY KEY (Branch_id)
 );
 CREATE TABLE Department (
   Dept_id int NOT NULL,
-  Dept_type varchar(255),
+  Dept_type char(1) NOT NULL CHECK (Dept_type='o' OR Dept_type='f' OR Dept_type='w' OR Dept_type='s'),
   Branch_id int NOT NULL,
-  Mgr_employee_id int NOT NULL,
+  Mgr_employee_id int,
   PRIMARY KEY (Dept_id),
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id),
   FOREIGN KEY (Mgr_employee_id) REFERENCES Branch(Employee_id)
@@ -52,8 +52,8 @@ CREATE TABLE Customer (
   First_Name varchar(255),
   Middle_Name varchar(255),
   Last_Name varchar(255),
-  Discount DECIMAL(10,4),
-  Tax_exempt BOOlEAN,
+  Discount DECIMAL(5,4) NOT NULL DEFAULT 0.0000 CHECK (Discount <= 1.0000),
+  Tax_exempt BOOlEAN NOT NULL DEFAULT FALSE,
   Branch_id int NOT NULL,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id)
@@ -65,83 +65,83 @@ CREATE TABLE Customer_address (
   State varchar(255),
   City varchar(255),
   Zipcode int,
-  is_shipping BOOLEAN,
-  is_billing BOOLEAN,
+  is_shipping BOOLEAN NOT NULL DEFAULT FALSE,
+  is_billing BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
 CREATE TABLE Customer_fax (
   Cust_id int NOT NULL,
-  Fax_no int,
+  Fax_no char(10),
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
 CREATE TABLE Customer_phone (
   Cust_id int NOT NULL,
-  Phone_no varchar(15),
-  is_primary BOOLEAN,
+  Phone_no char(10),
+  is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
 CREATE TABLE Customer_email (
   Cust_id int NOT NULL,
   Email varchar(255),
-  is_primary BOOLEAN,
+  is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
 CREATE TABLE Customer_contact (
   Cust_id int NOT NULL,
   Name varchar(255),
-  Phone_number varchar(15),
+  Phone_number char(10),
   Email_address varchar(255),
   PRIMARY KEY (Cust_id),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id)
 );
 --
 CREATE TABLE Manufacturer (
-  Name varchar(255),
+  Name varchar(255) NOT NULL,
   PRIMARY KEY (Name)
 );
 CREATE TABLE Manufacturer_address (
-  Man_name varchar(255),
-  Street varchar(255),
-  Apt varchar(255),
-  State varchar(255),
-  City varchar(255),
-  Zipcode int,
-  is_shipping BOOLEAN,
-  is_billing BOOLEAN,
+  Man_name varchar(255) NOT NULL,
+  Street varchar(255) NOT NULL,
+  Apt varchar(255) NOT NULL,
+  State charchar(2) NOT NULL,
+  City varchar(255) NOT NULL,
+  Zipcode char(5) NOT NULL,
+  is_shipping BOOLEAN NOT NULL DEFAULT FALSE,
+  is_billing BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Man_name),
-  FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_fax (
-  Man_name varchar(255),
-  Fax_no int,
+  Man_name varchar(255) NOT NULL,
+  Fax_no char(10) NOT NULL,
   PRIMARY KEY (Man_name),
-  FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_phone (
-  Man_name varchar(255),
-  Phone_no varchar(15),
-  is_primary BOOLEAN,
+  Man_name varchar(255) NOT NULL,
+  Phone_no char(10) NOT NULL,
+  is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Man_name),
-  FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_email (
-  Man_name varchar(255),
-  Email varchar(255),
-  is_primary BOOLEAN,
+  Man_name varchar(255) NOT NULL,
+  Email varchar(255) NOT NULL,
+  is_primary BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (Man_name),
-  FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 CREATE TABLE Manufacturer_contact (
-  Man_name varchar(255),
+  Man_name varchar(255) NOT NULL,
   Name varchar(255),
   Phone_number varchar(15),
   Email_address varchar(255),
   PRIMARY KEY (Man_name),
-  FOREIGN KEY (Cust_id) REFERENCES Manufacturer(Name)
+  FOREIGN KEY (Man_name) REFERENCES Manufacturer(Name)
 );
 --
 CREATE TABLE Part (
@@ -152,7 +152,7 @@ CREATE TABLE Part (
 CREATE TABLE Product (
   Prod_no int NOT NULL,
   Prod_name varchar(255),
-  Sale_price DECIMAL(100, 4),
+  Sale_price DECIMAL(12, 2),
   Route_no int,
   Bom_id int,
   PRIMARY KEY (Prod_no),
