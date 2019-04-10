@@ -29,7 +29,7 @@ CREATE TABLE Department (
 
 INSERT INTO Department (Dept_id, Dept_type, Branch_id, Mgr_employee_id)
 VALUES
-  (),
+  (1, 'o', 1, 1),
   (),
   ()
 
@@ -101,9 +101,9 @@ CREATE TABLE Customer (
   FOREIGN KEY (Branch_id) REFERENCES Branch(Branch_id)
 );
 
-INSERT INTO Customer (Dept_id, Manager, Primary_contact)
+INSERT INTO Customer (Cust_id, First_Name, Middle_Name, Last_Name, Discount, Tax_exempt, Branch_id)
 VALUES
-  (),
+  (1, "Jeff", "Bob","Smith", 0.32, true, 1),
   (),
   ()
 
@@ -122,7 +122,7 @@ CREATE TABLE Customer_address (
 
 INSERT INTO Customer_address (Cust_id, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
 VALUES
-  (),
+  (1, 123, "Apple Street", "OH", "Columbus", "43210", true, true),
   (),
   ()
 
@@ -135,7 +135,7 @@ CREATE TABLE Customer_fax (
 
 INSERT INTO Customer_fax (Cust_id, Fax_no)
 VALUES
-  (),
+  (1, 2341023),
   (),
   ()
 
@@ -149,7 +149,7 @@ CREATE TABLE Customer_phone (
 
 INSERT INTO Customer_phone (Cust_id, Phone_no, is_primary)
 VALUES
-  (),
+  (1, 123-456-7890, true),
   (),
   ()
 
@@ -163,7 +163,7 @@ CREATE TABLE Customer_email (
 
 INSERT INTO Customer_email (Cust_id, Email, is_primary)
 VALUES
-  (),
+  (1, jeff.smith@email.com, true),
   (),
   ()
 
@@ -178,7 +178,7 @@ CREATE TABLE Customer_contact (
 
 INSERT INTO Customer_contact (Cust_id, Name, Phone_number, Email_address)
 VALUES
-  (),
+  (1, "Jim Smith", 123-456-7890, jeff.smith@email.com),
   (),
   ()
 --
@@ -189,7 +189,7 @@ CREATE TABLE Manufacturer (
 
 INSERT INTO Manufacturer (Name)
 VALUES
-  (),
+  ("Manufacturer inc."),
   (),
   ()
 
@@ -208,7 +208,7 @@ CREATE TABLE Manufacturer_address (
 
 INSERT INTO Manufacturer_address (Man_name, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
 VALUES
-  (),
+  ("Manufacturer inc.", "Apple Street", "A", "Columbus", "43210", true, true),
   (),
   ()
 
@@ -221,7 +221,7 @@ CREATE TABLE Manufacturer_fax (
 
 INSERT INTO Manufacturer_fax (Man_name, Fax_no)
 VALUES
-  (),
+  ("Manufacturer inc.", 2781297),
   (),
   ()
 
@@ -235,7 +235,7 @@ CREATE TABLE Manufacturer_phone (
 
 INSERT INTO Manufacturer_phone (Man_name, Phone_no, is_primary)
 VALUES
-  (),
+  ("Manufacturer inc.", "123-456-7890", true),
   (),
   ()
 
@@ -249,7 +249,7 @@ CREATE TABLE Manufacturer_email (
 
 INSERT INTO Manufacturer_email (Man_name, Email, is_primary)
 VALUES
-  (),
+  ("Manufacturer inc.", "jeff.smith@gmail.com", true),
   (),
   ()
 
@@ -264,7 +264,7 @@ CREATE TABLE Manufacturer_contact (
 
 INSERT INTO Manufacturer_contact (Man_name, Name, Phone_number, Email_address)
 VALUES
-  (),
+  ("Manufacturer inc.", "Jeff Smith", "123-456-789", "jeff.smith@email.com"),
   (),
   ()
 --
@@ -276,7 +276,7 @@ CREATE TABLE Part (
 
 INSERT INTO Part (Part_no, Reorder_cap)
 VALUES
-  (),
+  (1, 1),
   (),
   ()
 
@@ -293,7 +293,7 @@ CREATE TABLE Product (
 
 INSERT INTO Product (Prod_no, Prod_name, Sale_price, Route_no, Bom_id)
 VALUES
-  (),
+  (1, "motorA", 54.99, 1, 1),
   (),
   ()
 
@@ -304,7 +304,7 @@ CREATE TABLE BoM (
 
 INSERT INTO BoM (Bom_id)
 VALUES
-  (),
+  (1),
   (),
   ()
 
@@ -319,7 +319,7 @@ CREATE TABLE Payment (
 
 INSERT INTO Payment (Payment_no, Payment_amount, Payment_date, Invoice_no)
 VALUES
-  (),
+  (1, 32.99, 2019-05-13, 1),
   (),
   ()
 
@@ -339,7 +339,7 @@ CREATE TABLE Order (
 
 INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Employee_id)
 VALUES
-  (),
+  (1, 2019-05-13, false, "Scratches on surface", 1, 1, 1),
   (),
   ()
 
@@ -351,7 +351,7 @@ CREATE TABLE Routing_sheet (
 
 INSERT INTO Routing_sheet (Route_no)
 VALUES
-  (),
+  (1),
   (),
   ()
 
@@ -369,7 +369,7 @@ CREATE TABLE Assembly_stage (
 
 INSERT INTO Assembly_stage (Route_no, Stage_no, Expected_duration, Start_time, End_time, Route_no)
 VALUES
-  (),
+  (1,1, '10:15:00','02:15:00','083000', '104500',1),
   (),
   ()
 
@@ -382,7 +382,7 @@ CREATE TABLE Invoice (
 
 INSERT INTO Invoice (Invoice_no, Term, Date_shipped)
 VALUES
-  (),
+  (1, 2019-03-13, 2019-05-13),
   (),
   ()
 
@@ -419,7 +419,7 @@ CREATE TABLE Employee (
 
 INSERT INTO Employee (Employee_id, Employee_type, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
 VALUES
-  (),
+  (1, 'o', "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, 555-555-5555, 555-555-5555, 555-555-5555, "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
   (),
   ()
 
@@ -440,7 +440,7 @@ CREATE TABLE Dependent (
 
 INSERT INTO Dependent (Employee_id, Name, Street, Apt, State, City, Zipcode, Phone_no, Email_address)
 VALUES
-  (),
+  (1, "Jeff", "Apple Street", "A", "OH", "Columbus", 43210, 555-555-5555, "jeff.smith@email.com"),
   (),
   ()
 --
@@ -453,7 +453,7 @@ CREATE TABLE Office_worker (
 
 INSERT INTO Office_worker (Employee_id, Salary_amount)
 VALUES
-  (),
+  (1, 333333.32),
   (),
   ()
 
@@ -467,7 +467,7 @@ CREATE TABLE Factory_worker (
 
 INSERT INTO Factory_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (),
+  (1, 2, 32.99),
   (),
   ()
 
@@ -481,7 +481,7 @@ CREATE TABLE Warehouse_worker (
 
 INSERT INTO Warehouse_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (),
+  (1, 2, 32.99),
   (),
   ()
 
@@ -495,7 +495,7 @@ CREATE TABLE Salesperson (
 
 INSERT INTO Salesperson (Employee_id, Salary_amount, Commission_rate)
 VALUES
-  (),
+  (1, 333333.23, 32.99),
   (),
   ()
 --
@@ -511,7 +511,7 @@ CREATE TABLE OrderContainsProduct (
 
 INSERT INTO OrderContainsProduct (Order_no, Prod_no, Quantity)
 VALUES
-  (),
+  (1,1,1),
   (),
   ()
 
@@ -527,7 +527,7 @@ CREATE TABLE BomContainsPart (
 
 INSERT INTO BomContainsPart (Bom_id, Part_no, Quantity)
 VALUES
-  (),
+  (1,1,1),
   (),
   ()
 
@@ -543,7 +543,7 @@ CREATE TABLE ManufacturerMakesPart (
 
 INSERT INTO ManufacturerMakesPart (Part_no, Man_name, Cost)
 VALUES
-  (),
+  (1, "Manufacturer inc.", 54.99),
   (),
   ()
 
@@ -559,7 +559,7 @@ CREATE TABLE EmployeeWorksDepartment (
 
 INSERT INTO EmployeeWorksDepartment (Employee_id, Dept_id, Office_no)
 VALUES
-  (),
+  (1,1,1),
   (),
   ()
 
@@ -575,6 +575,6 @@ CREATE TABLE BranchStocksPart (
 
 INSERT INTO BranchStocksPart (Part_no, Branch_id, Quantity)
 VALUES
-  (),
+  (1,1,1),
   (),
   ()
