@@ -259,7 +259,7 @@ VALUES
 CREATE TABLE Payment (
   Payment_no int NOT NULL CHECK (Payment_no > 0),
   Payment_amount DECIMAL(12,2) NOT NULL CHECK (Payment_amount > 0000000000.00),
-  Payment_DATE NOT NULL DEFAULT CURDATE()  CHECK (Payment_date <= CURDATE()),
+  Payment_date DATE NOT NULL DEFAULT CURDATE()  CHECK (Payment_date <= CURDATE()),
   Invoice_no int NOT NULL CHECK (Invoice_no > 0),
   PRIMARY KEY (Payment_no),
   FOREIGN KEY (Invoice_no) REFERENCES Invoice(Invoice_no)
@@ -284,7 +284,7 @@ CREATE TABLE Order (
   PRIMARY KEY (Order_no),
   FOREIGN KEY (Cust_id) REFERENCES Customer(Cust_id),
   FOREIGN KEY (Invoice_no) REFERENCES Invoice(Invoice_no),
-  FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id)
+  FOREIGN KEY (Salesperson_id) REFERENCES Employee(Employee_id)
 );
 
 INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Salesperson_id)
