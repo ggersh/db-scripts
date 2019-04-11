@@ -14,8 +14,8 @@ CREATE TABLE Branch (
 INSERT INTO Branch (Branch_id, Branch_name, Street, Apt, State, City, Zipcode, Telephone_no, Sales_tax)
 VALUES
   (3, "BranchA", "Renwick Drive", "A", "OH", "Newark", "19714", '5555555555', 7.2),
-  (),
-  ()
+  (1, "BranchB", "Cooper Drive", "B", "NY", "Columbus", "83292", '1234567890', 37.2),
+  (2, "BranchC", "Norton Avenue", "C", "WA", "Cleveland", "12304", '5555555555', 7.22)
 
 CREATE TABLE Department (
   Dept_id int NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE Department (
 INSERT INTO Department (Dept_id, Dept_type, Branch_id, Mgr_employee_id, Primary_contact)
 VALUES
   (1, 'o', 1, 1, 1),
-  (),
-  ()
+  (43123, 'w', 324, 2551, 531),
+  (53, 'f', 439, 12, 52)
 --
 CREATE TABLE Customer (
   Cust_id int NOT NULL,
@@ -50,8 +50,8 @@ CREATE TABLE Customer (
 INSERT INTO Customer (Cust_id, First_Name, Middle_Name, Last_Name, Discount, Tax_exempt, Branch_id)
 VALUES
   (1, "Jeff", "Bob","Smith", 0.32, true, 1),
-  (),
-  ()
+  (823, "Bo", "Jim", "Jamison", 0.45, false, 23),
+  (9102, "Ivan", "Christopher", "Unkrich")
 
 CREATE TABLE Customer_address (
   Cust_id int NOT NULL,
@@ -69,8 +69,8 @@ CREATE TABLE Customer_address (
 INSERT INTO Customer_address (Cust_id, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
 VALUES
   (1, "Apple Street", "A", "OH", "Columbus", "43210", true, true),
-  (),
-  ()
+  (431, "Jackson St", "C", "NY", "Cleveland", "34821", false, false),
+  (921, "Woodruff Ave", "F", "WA", "Chicago", "24921", false, true)
 
 CREATE TABLE Customer_fax (
   Cust_id int NOT NULL,
@@ -82,8 +82,8 @@ CREATE TABLE Customer_fax (
 INSERT INTO Customer_fax (Cust_id, Fax_no)
 VALUES
   (1, '1234567890'),
-  (),
-  ()
+  (432, '4333477423'),
+  (21, '8329103823')
 
 CREATE TABLE Customer_phone (
   Cust_id int NOT NULL,
@@ -96,8 +96,8 @@ CREATE TABLE Customer_phone (
 INSERT INTO Customer_phone (Cust_id, Phone_no, is_primary)
 VALUES
   (1, '1234567890', true),
-  (),
-  ()
+  (432, '5555555555', false),
+  (93, '9234276894', false)
 
 CREATE TABLE Customer_email (
   Cust_id int NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE Customer_email (
 INSERT INTO Customer_email (Cust_id, Email, is_primary)
 VALUES
   (1, "jeff.smith@email.com", true),
-  (),
-  ()
+  (493, "kev.unkrich@gmail.com", false),
+  (5932, "ivan.porollo@gmail.com", false)
 
 CREATE TABLE Customer_contact (
   Cust_id int NOT NULL,
@@ -125,8 +125,8 @@ CREATE TABLE Customer_contact (
 INSERT INTO Customer_contact (Cust_id, Name, Phone_number, Email_address)
 VALUES
   (1, "Jim Smith", '1234567890', "jeff.smith@email.com"),
-  (),
-  ()
+  (43, "Dan Chips", '6555555859', "d.chips@gmail.com"),
+  (53, "Chris Walker", '4549890394', "clare.fitz@gmail.com")
 --
 CREATE TABLE Manufacturer (
   Name varchar(255) NOT NULL,
@@ -136,8 +136,8 @@ CREATE TABLE Manufacturer (
 INSERT INTO Manufacturer (Name)
 VALUES
   ("Manufacturer inc."),
-  (),
-  ()
+  ("Manufacturing R Us"),
+  ("Manufacturer")
 
 CREATE TABLE Manufacturer_address (
   Man_name varchar(255) NOT NULL,
@@ -155,8 +155,8 @@ CREATE TABLE Manufacturer_address (
 INSERT INTO Manufacturer_address (Man_name, Street, Apt, State, City, Zipcode, is_shipping, is_billing)
 VALUES
   ("Manufacturer inc.", "Apple Street", "A", "Columbus", "43210", true, true),
-  (),
-  ()
+  ("Toy inc.", "Woodruff Ave.", "B", "Cleveland", "48292", false, true),
+  ("Toy inc.", "Greystone", "D", "Columbus", "32812", false, false)
 
 CREATE TABLE Manufacturer_fax (
   Man_name varchar(255) NOT NULL,
@@ -168,8 +168,8 @@ CREATE TABLE Manufacturer_fax (
 INSERT INTO Manufacturer_fax (Man_name, Fax_no)
 VALUES
   ("Manufacturer inc.", '1234567890'),
-  (),
-  ()
+  ("Toy inc.",'5555555555'),
+  ("Toy inc.",'6555555859')
 
 CREATE TABLE Manufacturer_phone (
   Man_name varchar(255) NOT NULL,
@@ -182,8 +182,8 @@ CREATE TABLE Manufacturer_phone (
 INSERT INTO Manufacturer_phone (Man_name, Phone_no, is_primary)
 VALUES
   ("Manufacturer inc.", '1234567890', true),
-  (),
-  ()
+  ("Toy inc.", '6555555859', false),
+  ("Fun inc.", '5326339008', true)
 
 CREATE TABLE Manufacturer_email (
   Man_name varchar(255) NOT NULL,
@@ -196,8 +196,8 @@ CREATE TABLE Manufacturer_email (
 INSERT INTO Manufacturer_email (Man_name, Email, is_primary)
 VALUES
   ("Manufacturer inc.", "jeff.smith@gmail.com", true),
-  (),
-  ()
+  ("Toy inc.", "bob.jim@gmail.com", true),
+  ("Fun inc.", "e.gersh@gmail.com", false)
 
 CREATE TABLE Manufacturer_contact (
   Man_name varchar(255) NOT NULL,
@@ -211,8 +211,8 @@ CREATE TABLE Manufacturer_contact (
 INSERT INTO Manufacturer_contact (Man_name, Name, Phone_number, Email_address)
 VALUES
   ("Manufacturer inc.", "Jeff Smith", '1234567890', "jeff.smith@email.com"),
-  (),
-  ()
+  ("Manufacturer inc.", "Jeff Smith", '1234567890', "jeff.smith@email.com"),
+  ("Manufacturer inc.", "Jeff Smith", '1234567890', "jeff.smith@email.com")
 --
 CREATE TABLE Part (
   Part_no int NOT NULL,
@@ -224,8 +224,8 @@ CREATE TABLE Part (
 INSERT INTO Part (Part_no, Part_name, Reorder_cap)
 VALUES
   (1, "PartA", 1),
-  (),
-  ()
+  (32, "PartB", 432),
+  (432, "PartC", 5381)
 
 CREATE TABLE Product (
   Prod_no int NOT NULL,
@@ -241,8 +241,8 @@ CREATE TABLE Product (
 INSERT INTO Product (Prod_no, Prod_name, Sale_price, Route_no, Bom_id)
 VALUES
   (1, "motorA", 54.99, 1, 1),
-  (),
-  ()
+  (132, "motorB", 94.39, 29, 192),
+  (192, "motorC", 46.32, 23, 943)
 
 CREATE TABLE BoM (
   Bom_id int NOT NULL,
@@ -252,8 +252,8 @@ CREATE TABLE BoM (
 INSERT INTO BoM (Bom_id)
 VALUES
   (1),
-  (),
-  ()
+  (2371),
+  (948)
 
 CREATE TABLE Payment (
   Payment_no int NOT NULL,
@@ -267,8 +267,8 @@ CREATE TABLE Payment (
 INSERT INTO Payment (Payment_no, Payment_amount, Payment_date, Invoice_no)
 VALUES
   (1, 32.99, 2019-05-13, 1),
-  (),
-  ()
+  (329, 312.93, 2009-11-07, 321),
+  (1, 343.39, 2018-05-13, 3821)
 
 CREATE TABLE Order (
   Order_no int NOT NULL,
@@ -288,8 +288,8 @@ CREATE TABLE Order (
 INSERT INTO Order (Order_no, Date_ordered, Approved_denied, Reason, Cust_id, Invoice_no, Salesperson_id)
 VALUES
   (1, 2019-05-13, false, "Scratches on surface", 1, 1, 1),
-  (),
-  ()
+  (132, 2012-08-08, false, "Banged up", 12, 404, 329),
+  (1312, 2002-03-08, true, "Looks good", 1232, 4204, 34929)
 
 CREATE TABLE Routing_sheet (
   Route_no int NOT NULL,
@@ -299,8 +299,8 @@ CREATE TABLE Routing_sheet (
 INSERT INTO Routing_sheet (Route_no)
 VALUES
   (1),
-  (),
-  ()
+  (9108),
+  (322)
 
 CREATE TABLE Assembly_stage (
   Route_no int NOT NULL,
@@ -315,8 +315,8 @@ CREATE TABLE Assembly_stage (
 INSERT INTO Assembly_stage (Route_no, Stage_no, Expected_duration, Start_time, End_time)
 VALUES
   (1,1, '10:15:00','02:15:00','083000', '104500'),
-  (),
-  ()
+  (32, 23, '08:18:00','03:15:00','083000', '114500'),
+  (0123,392, '12:15:00','01:15:00','093000', '104500')
 
 CREATE TABLE Invoice (
   Invoice_no int NOT NULL,
@@ -328,8 +328,8 @@ CREATE TABLE Invoice (
 INSERT INTO Invoice (Invoice_no, Term, Date_shipped)
 VALUES
   (1, 2019-03-13, 2019-05-13),
-  (),
-  ()
+  (3291, 2011-02-10, 2017-09-23),
+  (438, 1997-02-11, 2013-08-18)
 
 CREATE TABLE Employee (
   Employee_id int NOT NULL,
