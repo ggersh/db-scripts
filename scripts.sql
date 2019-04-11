@@ -272,7 +272,8 @@ VALUES
 
 CREATE TABLE Order (
   Order_no int NOT NULL,
-  Date_ordered DATE NOT NYLL,
+  Date_ordered DATE NOT NULL,
+  Total_price DECIMAL(12, 2) NOT NULL,
   Approved_denied BOOLEAN,
   Reason varchar(255),
   Cust_id int NOT NULL,
@@ -365,16 +366,17 @@ CREATE TABLE Employee (
 
 INSERT INTO Employee (Employee_id, Employee_type, Dept_id, First_Name, Middle_Name, Last_Name, Gender, Birth_date, SSN, Street, Apt, State, City, Zipcode, Mobile_phone_no, Home_phone_no, Work_phone_no, Marital_status, Job_title, Part_dental, Part_vision, 401k, Hours_vacation, Hours_sick, Work_email, Username, Password)
 VALUES
-  (1, 'o', 1, "Jeff", "Bob", "Smith", "Male", 1967-05-13, 321543621, "Apple Street", "OH", "Columbus", 43210, '5555555555', '5555555555', '5555555555', "Married", "salesperson", true, true, 0.0875, 13, 7, "jeff.smith@email.com", "jeffsmith", "password"),
-  (),
-  ()
+  (1, 's', 52, "Jeff", "Bob", "Smith", 'm', '1967-05-13', '321543621', "Apple Street", "OH", "Columbus", 43210, '5555555555', '8888888888', '9999999999', TRUE, "salesperson", TRUE, FALSE, 0.0875, 013.00, 022.00, 'jeff.smith@email.com', "jeffsmith", "password"),
+  (2, 'w', 53, 'Anthony', NULL, 'Bennett', 'm', '1984-06-09', '333224444', 'Orange Road', 'OH', 'Columbus', 43201, '762333444', NULL, NULL, FALSE, 'warehouse manager', TRUE, TRUE, 0.1000, 036.00, 008.00, 'ab23@email.com', 'ab23', 'wordpass'),
+  (3, 'f', 54, 'Terra', 'Lee', 'Freeman', 'f', '1982-08-08', '111112345', 'Roader Street', 'AZ', 'Pheonix', 73494, '1446623323', NULL, '1231234444', TRUE, 'factory line worker', FALSE, FALSE, 0.0620, 000.00, 014.00, 'terraf@email.com', 'freemant', 'swordpa'),
+  (4, 'o', 55, 'Gretta', 'NULL', 'Gill', 'f', '1990-07-04', '776776677', 'Oiler Street', 'AZ', 'Pheonix', 73494, NULL, '4423324444', '7227727722', FALSE, 'office coordinator', TRUE, TRUE, 0.0900, 024.00, 024.00, 'ggill@email.com', 'grettagill', 'passsss');
 
 CREATE TABLE Dependent (
   Employee_id int NOT NULL,
   Name varchar(255) NOT NULL,
   Street varchar(255),
   Apt varchar(255),
-  State varchar(255),
+  State char(2),
   City varchar(255),
   Zipcode char(5),
   Phone_no char(10),
@@ -385,9 +387,9 @@ CREATE TABLE Dependent (
 
 INSERT INTO Dependent (Employee_id, Name, Street, Apt, State, City, Zipcode, Phone_no, Email_address)
 VALUES
-  (1, "Jeff", "Apple Street", "A", "OH", "Columbus", '43210', '5555555555', "jeff.smith@email.com"),
-  (),
-  ()
+  (1, "Jack", "Apple Street", "A", "OH", "Columbus", '43210', '5555555555', "jack.smith@email.com"),
+  (1, 'Thomas', 'Green Street', NULL, 'OH', 'Cincinnati', '45140', '1234567899', NULL),
+  (3, 'Sarah', NULL, NULL, NULL, NULL, NULL, '3245557777', 'Sarah44@yahoo.com');
 --
 CREATE TABLE Office_worker (
   Employee_id int NOT NULL,
@@ -398,9 +400,7 @@ CREATE TABLE Office_worker (
 
 INSERT INTO Office_worker (Employee_id, Salary_amount)
 VALUES
-  (1, 333333.32),
-  (),
-  ()
+  (4, 000075000.00);
 
 CREATE TABLE Factory_worker (
   Employee_id int NOT NULL,
@@ -412,9 +412,7 @@ CREATE TABLE Factory_worker (
 
 INSERT INTO Factory_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (1, 2.02, 32.99),
-  (),
-  ()
+  (3, 056.02, 022.99);
 
 CREATE TABLE Warehouse_worker (
   Employee_id int NOT NULL,
@@ -426,9 +424,7 @@ CREATE TABLE Warehouse_worker (
 
 INSERT INTO Warehouse_worker (Employee_id, Hours_worked, Hourly_rate)
 VALUES
-  (1, 2.02, 32.99),
-  (),
-  ()
+  (2, 043.80, 012.22);
 
 CREATE TABLE Salesperson (
   Employee_id int NOT NULL,
@@ -440,9 +436,7 @@ CREATE TABLE Salesperson (
 
 INSERT INTO Salesperson (Employee_id, Salary_amount, Commission_rate)
 VALUES
-  (1, 333333.23, 32.99),
-  (),
-  ()
+  (1, 000033333.23, 0.1000);
 --
 CREATE TABLE OrderContainsProduct (
   Order_no int NOT NULL,
@@ -455,9 +449,9 @@ CREATE TABLE OrderContainsProduct (
 
 INSERT INTO OrderContainsProduct (Order_no, Prod_no, Quantity)
 VALUES
-  (1,1,1),
-  (),
-  ()
+  (111111,789,22),
+  (111111,456,10),
+  (222222,123,45);
 
 CREATE TABLE BomContainsPart (
   Bom_id int NOT NULL,
@@ -470,9 +464,10 @@ CREATE TABLE BomContainsPart (
 
 INSERT INTO BomContainsPart (Bom_id, Part_no, Quantity)
 VALUES
-  (1,1,1),
-  (),
-  ()
+  (4455,123,6),
+  (4455,456,1),
+  (2233,456,3),
+  (2233,789,12);
 
 CREATE TABLE ManufacturerMakesPart (
   Part_no int NOT NULL,
@@ -485,9 +480,10 @@ CREATE TABLE ManufacturerMakesPart (
 
 INSERT INTO ManufacturerMakesPart (Part_no, Man_name, Cost)
 VALUES
-  (1, "Manufacturer inc.", 54.99),
-  (),
-  ()
+  (123, 'Manufacturer inc.', 54.99),
+  (123, 'Manufacturing R Us', 44.79),
+  (456, 'Manufacturing R Us', 28.99),
+  (789, 'Manufacturing R Us', 234.89);
 
 CREATE TABLE BranchStocksPart (
   Part_no int NOT NULL,
@@ -500,6 +496,6 @@ CREATE TABLE BranchStocksPart (
 
 INSERT INTO BranchStocksPart (Part_no, Branch_id, Quantity)
 VALUES
-  (1,1,1),
-  (),
-  ()
+  (123,1,500),
+  (456,1,225),
+  (789,3,2500);
